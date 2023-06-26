@@ -11,10 +11,18 @@ import java.text.NumberFormat;
 
 public class placeholders extends PlaceholderExpansion {
 
+    String pronouns = "";
+
     private final Pronouns plugin;
 
     public placeholders(Pronouns plugin){
         this.plugin = plugin;
+    }
+
+
+    @Override
+    public String getIdentifier() {
+        return "pronouns";
     }
 
     @Override
@@ -23,37 +31,35 @@ public class placeholders extends PlaceholderExpansion {
     }
 
     @Override
-    public String getIdentifier() {
-        return "pronouns";
-    }
-
-    @Override
     public String getVersion() {
         return "1.0.0";
     }
 
     @Override
-    public boolean persist() {
-        return true; // This is required or else PlaceholderAPI will unregister the Expansion on reload
+    public boolean persist(){
+        return true;
     }
 
     @Override
-    public String onRequest(OfflinePlayer player, String params) {
-        if (params.equalsIgnoreCase("current")) {
-            String pronouns = null;
+    public String onRequest(OfflinePlayer player, String params){
+
+        if (params.equalsIgnoreCase("set")){
+
             try {
-                PreparedStatement ps1 = plugin.con.GetDb().prepareStatement("SELECT * FROM pronouns WHERE playerUUID=?");
-                ps1.setString(1, player.getUniqueId().toString());
-                ResultSet rs1 = ps1.executeQuery();
+                PreparedStatement statement = plugin.con.GetDb().prepareStatement("SELECT pronounsSet FROM pronouns WHERE playerUUID=?");
+                statement.setString(1, String.valueOf(player.getUniqueId()));
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
 
-                if (rs1.next()) {
+                    pronouns = resultSet.getString("pronounsSet");
 
-                    pronouns = rs1.getString("pronounsSet");
+                } else {
+
+                    pronouns = "N/A";
 
                 }
-
-            } catch (SQLException e) {
-                    throw new RuntimeException(e);
+            }catch (SQLException e){
+                e.printStackTrace();
             }
 
             return pronouns;
@@ -62,6 +68,8 @@ public class placeholders extends PlaceholderExpansion {
 
 
         return null;
+
     }
+
 
 }

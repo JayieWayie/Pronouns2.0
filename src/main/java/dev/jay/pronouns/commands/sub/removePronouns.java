@@ -27,6 +27,7 @@ public class removePronouns {
             PreparedStatement st1 = plugin.con.GetDb().prepareStatement("UPDATE pronouns SET pronounsSet=? WHERE playerUUID=?");
             st1.setString(1, plugin.getConfig().getString("Plugin.Default"));
             st1.setString(2, String.valueOf(player.getUniqueId()));
+            st1.executeUpdate();
 
             player.sendMessage(Color(Hex(prefix + " " + clear)));
 

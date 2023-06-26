@@ -9,45 +9,46 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class checkPronouns {
+public class checkother {
 
     private final Pronouns plugin;
 
-    public checkPronouns(Pronouns plugin){
+    public checkother(Pronouns plugin){
         this.plugin = plugin;
     }
 
-    public void onCheckRequest(Player player) throws SQLException {
+    public void onCheckOther(Player player, Player target) throws SQLException {
+
 
         String prefix = plugin.getConfig().getString("Plugin.Prefix");
         String checkMessage = plugin.getConfig().getString("Messages.Pronouns-Check-Other");
         String checkMessage2 = plugin.getConfig().getString("Messages.Pronouns-Check-Self");
         String error1 = plugin.getConfig().getString("Errors.NoPermission");
 
-        if (player.hasPermission("pronouns.check.self")) {
+        if (target != null) {
+
+            if (player.hasPermission("pronouns.check.other")) {
 
 
-            PreparedStatement ps1 = plugin.con.GetDb().prepareStatement("SELECT * FROM pronouns WHERE playerUUID=?");
-            ps1.setString(1, player.getUniqueId().toString());
-            ResultSet rs1 = ps1.executeQuery();
+                PreparedStatement ps1 = plugin.con.GetDb().prepareStatement("SELECT * FROM pronouns WHERE playerUUID=?");
+                ps1.setString(1, target.getUniqueId().toString());
+                ResultSet rs1 = ps1.executeQuery();
 
-            if (rs1.next()) {
+                if (rs1.next()) {
 
-                checkMessage2 = checkMessage2.replace("%pronouns%", rs1.getString("pronounsSet"));
+                    checkMessage = checkMessage.replace("%target%", target.getName()).replace("%pronouns%", rs1.getString("pronounsSet"));
 
-                player.sendMessage(Color(Hex(prefix + " " + checkMessage2)));
+                    player.sendMessage(Color(Hex(prefix + " " + checkMessage)));
 
+                }
+
+
+            } else {
+
+                player.sendMessage(Color(Hex(prefix + " " + error1)));
             }
-
-        } else {
-
-            player.sendMessage(Color(Hex(prefix + " " + error1)));
         }
-
     }
-
-
-
     private String Color(String s){
         s = org.bukkit.ChatColor.translateAlternateColorCodes('&', s);
         return s;

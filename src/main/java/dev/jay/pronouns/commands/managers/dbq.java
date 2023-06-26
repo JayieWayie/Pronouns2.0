@@ -17,7 +17,7 @@ public class dbq {
     }
 
     public void createTable() throws SQLException {
-        PreparedStatement table = plugin.con.GetDb().prepareStatement("CREATE TABLE IF NOT EXISTS pronouns(playerUUID varchar(255), pronounsSet varchar(100), PRIMARY KEY(playerUUID))");
+        PreparedStatement table = plugin.con.GetDb().prepareStatement("CREATE TABLE IF NOT EXISTS pronouns(playerUUID varchar, pronounsSet varchar, PRIMARY KEY(playerUUID))");
         table.executeUpdate();
         System.out.println("Table created.");
     }
@@ -25,17 +25,17 @@ public class dbq {
     public void createPlayer(Player player) throws SQLException {
         UUID uuid = player.getUniqueId();
         if (!doesPlayerExist(player)){
-            PreparedStatement createPlayer = plugin.con.GetDb().prepareStatement("INSERT IGNORE INTO pronouns (playerUUID, pronounsSet) VALUES (?,?)");
+            PreparedStatement createPlayer = plugin.con.GetDb().prepareStatement("INSERT INTO pronouns(playerUUID, pronounsSet) VALUES (?,?)");
             createPlayer.setString(1, uuid.toString());
             createPlayer.setString(2, "N/A");
             createPlayer.executeUpdate();
+            System.out.println("Player created.");
         }
     }
 
 
     public boolean doesPlayerExist(Player player) throws SQLException{
         UUID uuid = player.getUniqueId();
-
         PreparedStatement ps1 = plugin.con.GetDb().prepareStatement("SELECT * FROM pronouns WHERE playerUUID=?");
         ps1.setString(1, String.valueOf(uuid));
         ResultSet rs1 = ps1.executeQuery();

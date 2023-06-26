@@ -20,7 +20,7 @@ public class changePronouns {
     public void onChangeRequest(Player player, String value) throws SQLException {
         List<String> pronounsList = plugin.getConfig().getStringList("Pronouns-List");
         String prefix = plugin.getConfig().getString("Plugin.Prefix");
-        String message = plugin.getConfig().getString("Pronouns-Changed");
+        String message = plugin.getConfig().getString("Messages.Pronouns-Changed");
         String error1 = plugin.getConfig().getString("Errors.NoPermission");
         String error2 = plugin.getConfig().getString("Errors.NoPronouns");
         boolean valid = false;
@@ -28,7 +28,7 @@ public class changePronouns {
         if (player.hasPermission("pronouns.set.self")){
 
             for (String pl : pronounsList){
-                if (value.equalsIgnoreCase(pl)){
+                if (pl.equalsIgnoreCase(value)){
                     valid = true;
                 }
             }
@@ -38,10 +38,11 @@ public class changePronouns {
                 PreparedStatement st1 = plugin.con.GetDb().prepareStatement("UPDATE pronouns SET pronounsSet=? WHERE playerUUID=?");
                 st1.setString(1, value);
                 st1.setString(2, String.valueOf(player.getUniqueId()));
+                st1.executeUpdate();
                 message = message.replace("%pronouns%", value);
                 player.sendMessage(Color(Hex(prefix + " " + message)));
 
-            }else {
+            } else {
 
                 player.sendMessage(Color(Hex(prefix + " " + error2)));
 

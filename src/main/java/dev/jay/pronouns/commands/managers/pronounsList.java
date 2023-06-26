@@ -23,14 +23,12 @@ public class pronounsList {
         List<String> listformat = plugin.getConfig().getStringList("List-Format.ForEach");
 
         player.sendMessage(Color(Hex(listTitle)));
-        for(String pronounsList : requestList){
-            for (String formatList : listformat){
-                formatList = formatList.replace("%pronouns-list-item%", pronounsList);
-                player.sendMessage(Color(Hex(formatList)));
+            for(String pronounsList : requestList){
+                for (String formatList : listformat){
+                    formatList = formatList.replace("%pronouns_list_item%", pronounsList);
+                    player.sendMessage(Color(Hex(formatList)));
+                }
             }
-
-        }
-
 
     }
 

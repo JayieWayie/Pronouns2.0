@@ -1,0 +1,12 @@
+dev\jay\pronouns\commands\main.class
+dev\jay\pronouns\commands\managers\pronounsList.class
+dev\jay\pronouns\commands\sub\reload.class
+dev\jay\pronouns\commands\sub\changePronouns.class
+dev\jay\pronouns\commands\managers\placeholders.class
+dev\jay\pronouns\commands\sub\checkPronouns.class
+dev\jay\pronouns\commands\sub\checkother.class
+dev\jay\pronouns\commands\managers\db.class
+dev\jay\pronouns\commands\sub\helpMessage.class
+dev\jay\pronouns\commands\sub\removePronouns.class
+dev\jay\pronouns\commands\managers\dbq.class
+dev\jay\pronouns\Pronouns.class
