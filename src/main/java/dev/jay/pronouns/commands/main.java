@@ -21,12 +21,13 @@ public class main implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (command.getName().equalsIgnoreCase("pronouns")) {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
+            try {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
 
                     if (args[0].equalsIgnoreCase("check")) {
 
-                        if (args.length < 2){
+                        if (args.length < 2) {
 
                             try {
                                 plugin.checkpns.onCheckRequest(player);
@@ -34,7 +35,7 @@ public class main implements CommandExecutor {
                                 plugin.hm.onHelpRequest(player);
                             }
 
-                        }else if (args.length == 2){
+                        } else if (args.length == 2) {
                             Player target = Bukkit.getPlayer(args[1]);
 
                             try {
@@ -43,7 +44,7 @@ public class main implements CommandExecutor {
                                 plugin.hm.onHelpRequest(player);
                             }
 
-                        }else{
+                        } else {
 
                             plugin.hm.onHelpRequest(player);
 
@@ -74,21 +75,24 @@ public class main implements CommandExecutor {
                         plugin.hm.onHelpRequest(player);
 
 
-                    } else if (args[0].equalsIgnoreCase("reload")){
+                    } else if (args[0].equalsIgnoreCase("reload")) {
 
-                        if (player.hasPermission("pronouns.reload")){
+                        if (player.hasPermission("pronouns.reload")) {
 
                             plugin.rl.reload(plugin, player);
 
                         }
 
 
-                    }else {
+                    } else {
 
                         plugin.hm.onHelpRequest(player);
 
                     }
 
+                }
+            }catch (ArrayIndexOutOfBoundsException e){
+                plugin.hm.onHelpRequest(((Player) sender).getPlayer());
             }
         }
 
