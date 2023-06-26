@@ -1,0 +1,4 @@
+name: Pronouns
+version: '1.0'
+main: dev.jay.pronouns.Pronouns
+api-version: 1.19

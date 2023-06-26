@@ -1,0 +1,57 @@
+#
+#
+#
+#               Pronouns - Public plugin by Jay / qwml
+#               Join the discord @ discord.gg/solarnet
+#                     Check out Solar Network
+#                      Coded by Jay / qwml
+#
+#
+#
+
+# Main Plugin Settings.
+Plugin:
+  Prefix: '&#9266ff&l&oP&#8c6dff&l&or&#8774ff&l&oo&#a27eff&l&on&#cf89ff&l&oo&#efa1ff&l&ou&#f7d0ff&l&on&#ffffff&l&os &7>'
+  # Set to this if no pronouns are set.
+  Default: 'N/A'
+  # Database types can be H2 or MySQL.
+  Database:
+    Type: 'H2'
+    # Ignore if Type = H2
+    Address: 'localhost'
+    Port: '3306'
+    Username: 'root'
+    Password: '*********'
+    DatabaseName: 'db_pronouns_123'
+
+Pronouns-List:
+  - 'he/him'
+  - 'she/her'
+  - 'they/them'
+
+List-Format:
+  Title: '&aPronouns List'
+  ForEach:
+    - ''
+    - '&6%pronoun_list_item%'
+    - ''
+
+Messages:
+  Pronouns-Changed: '&7You have changed your pronouns to &a%pronouns%.'
+  Pronouns-Cleared: '&7You have cleared your pronouns.'
+  Pronouns-Check-Self: '&7Your pronouns are currently set to &a%pronouns%.'
+  Pronouns-Check-Other: '&7%target% has the pronouns &a%pronouns%.'
+
+HelpMessage:
+  - '&7-+-+-+- &6Pronouns Help &7-+-+-+-'
+  - ''
+  - '&6/pronouns set (pronouns) - Change your own pronouns!'
+  - '&6/pronouns check (name) - Check another players pronouns!'
+  - '&6/pronouns list - List all the available pronouns!'
+  - ''
+
+Errors:
+  NoPlayer: '&cThis is not an online player.'
+  NullArguments: '&cIncorrect command, try /pronouns help.'
+  NoPermission: '&cNo permission to this command.'
+  NoPronouns: '&cIncorrect pronouns entered. Try /pronouns list'
